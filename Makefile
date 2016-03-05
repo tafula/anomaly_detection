@@ -4,8 +4,8 @@ clean:
 	rm -f AnomalyDetection
 	rm -f learner
 	rm -f tester
-#	rm -rf input/ucsd/ped1/train/Train00*/*
-#	rm -rf input/masks/ucsd/ped1/train/train00*/*
+#	chmod +x clean.sh
+#	./clean.sh
 
 learner:
 	g++ -o learner code/learner.cpp -O2 -I/usr/include/opencv -I/usr/local/include/opencv -L/usr/lib -L/usr/local/lib -larmadillo -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_video
