@@ -1,11 +1,8 @@
-all: clean learner tester AnomalyDetection
+all: learner tester AnomalyDetection
 
 clean:
-	rm -f AnomalyDetection
-	rm -f learner
-	rm -f tester
-#	chmod +x clean.sh
-#	./clean.sh
+	chmod +x clean.sh
+	./clean.sh
 
 learner:
 	g++ -o learner code/learner.cpp -O2 -I/usr/include/opencv -I/usr/local/include/opencv -L/usr/lib -L/usr/local/lib -larmadillo -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_video

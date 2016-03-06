@@ -2,6 +2,25 @@
 #include"main.h"
 
 int main(int argc, char** argv){
+  /**************************************************/	
+  /*** Setta o num de imagens que ele vai receber ***/
+  /**************************************************/
+  FILE* setter = fopen("settings.txt", "r");
+  if(setter == NULL) cout << "Problema lendo settings.txt!";
+	
+  int nOfImages = 0; //NUMERO DE IMAGENS QUE ELE RECEBE
+  char c;
+  while ((c = fgetc(setter)) != EOF){
+    if (c == ' ' || c == '\n' || c == '\t') nOfImages += 1;
+    if (nOfImages == 1){
+      fscanf(setter, "%d", &nOfImages);
+      break;
+    }
+  }
+  fclose(setter);
+  /**************************************************/
+  /**************************************************/
+
   cv::VideoCapture cap(0);
   cv::BackgroundSubtractorMOG2 bg = cv::BackgroundSubtractorMOG2();
   int i = 0;
@@ -20,7 +39,7 @@ int main(int argc, char** argv){
     cv::cvtColor(lixo, lixo, CV_BGR2GRAY);
   bg(lixo, luxo, 0.0001); //removes background
   //gather the input images and their foreground masks
-  while(i < 300){
+  while(i < nOfImages){
     cv::Mat image, bw; //frame to be saved
     cap >> image;
     cv::resize(image, image, cv::Size(238, 158), 0, 0, CV_INTER_CUBIC);
@@ -58,7 +77,7 @@ int main(int argc, char** argv){
     imwrite(maskname, foreground);
     fprintf(mask_list, "%03d.png\n", i);
     
-    if(i % 10 == 0) cout << i << "\n";  
+    if(i % 10 == 9) cout << i+1 << "\n";  
     i++;
 
     imshow("Feed", image);

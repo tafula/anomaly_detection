@@ -29,7 +29,6 @@
 
 #define  READ_MASKS
 #define WRITE_OUTPUT
-int nOfImages = 300; //NUMERO DE IMAGENS QUE ELE RECEBE
 
 cv::Mat compute_ad_mask(const AnomalyDetection &obj, const rowvec& in_params);
 
@@ -44,17 +43,32 @@ filtered_detection(vector<cv::Mat> &display_buffer, AnomalyDetection &obj, const
 
 string outpath = "output/ad_masks/ped1/";
 
-int main(int argc, char **argv)
-{
-
+int main(int argc, char **argv){
 	cout << "using Armadillo " << arma_version::major << "." << arma_version::minor << "." << arma_version::patch
 			<< endl;
+    /******************************************************/	
+	/*** Setta o num de imagens que ele recebe de teste ***/
+	/******************************************************/
+	FILE* setter = fopen("settings.txt", "r");
+	if(setter == NULL) cout << "Problema lendo settings.txt!";
+	
+	int nOfImages = 0; //NUMERO DE IMAGENS QUE ELE RECEBE
+	char c;
+	while ((c = fgetc(setter)) != EOF){
+		if (c == ' ' || c == '\n' || c == '\t') nOfImages += 1;
+		if (nOfImages == 3){
+			fscanf(setter, "%d", &nOfImages);
+			break;
+		}
+	}
+	fclose(setter);
+	/******************************************************/
+	/******************************************************/
 
 	cube ad_flags;
 	wall_clock timer;
 	mat param_vec;
 	vector<cv::Mat> display_buffer;
-
 
 	ofstream avg_results;
 

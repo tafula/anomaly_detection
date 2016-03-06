@@ -1,4 +1,4 @@
- input/learn/mask/       input/learn/img/	   input/test/mask/     input/test/img/  t001
+ input/learn/mask/       input/learn/img/	   test/mask/f0/     test/img/f0/  t001
 ............
 
 1st argument  - path to foreground masks of training images 
