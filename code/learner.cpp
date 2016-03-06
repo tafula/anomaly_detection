@@ -1,5 +1,7 @@
-#include"inc.h"
-#include"main.h"
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
+using namespace std;
 
 int main(int argc, char** argv){
   /**************************************************/	
@@ -28,17 +30,6 @@ int main(int argc, char** argv){
   FILE* image_list = fopen("input/training_images.txt", "w");
   FILE* mask_list = fopen("input/training_masks.txt", "w");
 
-  cv::Mat lixo;
-  cv::Mat luxo;
-
-  cap >> lixo;
-
-  bg(lixo, luxo, 0.0001); //removes background
-
-  cap >> lixo;
-    cv::cvtColor(lixo, lixo, CV_BGR2GRAY);
-  bg(lixo, luxo, 0.0001); //removes background
-  //gather the input images and their foreground masks
   while(i < nOfImages){
     cv::Mat image, bw; //frame to be saved
     cap >> image;
@@ -65,7 +56,13 @@ int main(int argc, char** argv){
     bg(frame, foreground, 0.0001); //removes background
 
     cv::threshold(foreground, foreground, 125, 255, CV_THRESH_BINARY); //gets foreground mask
-	  
+    
+    double min, max;
+    minMaxLoc(foreground, &min, &max);
+
+    if(min == 255 or max == 0)
+      continue;
+
     //saves image
     char filename[64];
     sprintf(filename, "input/learn/img/%03d.tif", i);

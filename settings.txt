@@ -1,2 +1,2 @@
-nOfImagesLEARNER	200
-nOfImagesMAIN		40
+nOfImagesLEARNER	400
+nOfImagesMAIN		400
