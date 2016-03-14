@@ -30,7 +30,8 @@ int main(int argc, char** argv){
   int swap = 0; //swapper de pastas
 
   //gather the input images and their foreground masks
-  while(i < nOfImages){
+  while(true){
+    //while(i < nOfImages){
     cv::Mat image, bw; //frame to be saved
     cap >> image;
     cv::resize(image, image, cv::Size(238, 158), 0, 0, CV_INTER_CUBIC);
@@ -78,7 +79,7 @@ int main(int argc, char** argv){
 	//faz o swap
 	if(i == nOfImages){
 		swap = 1-swap;
-		i = 0;
+		//i = 0;
 	}
 
     imshow("Feed", image);
